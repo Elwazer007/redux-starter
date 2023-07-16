@@ -1,16 +1,14 @@
-import { createStore } from 'redux';
+import { addIngredient } from "./actions/ingredients";
+import { addRecipe, fetchRecipes } from "./actions/recipes";
+import loadUI from "./ui";
+import store from "./store";
 
-const reducer = (state, action) =>
-	action.type === 'INC'
-		? state + 1
-		: state;
 
-const initialState = 0;
+loadUI();
 
-const store = createStore(reducer, initialState);
+store.dispatch(fetchRecipes());
 
-store.subscribe(() => document.getElementById('counter').innerText = store.getState());
+store.dispatch(addRecipe("Scrambled Eggs"));
+store.dispatch(addIngredient("Scrambled Eggs", "Egg", 2));
 
-setInterval(() => store.dispatch({ type: 'INC' }), 500);
-
-console.log("Redux started");
+console.log(store.getState());
